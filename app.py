@@ -3,9 +3,15 @@ import pandas as pd
 from huggingface_hub import hf_hub_download
 import joblib
 
-# Download and load the model
-model_path = hf_hub_download(repo_id="bhatiashikha24/tourism_package_model", filename="best_tourism_package_model_v1.joblib")
-model = joblib.load(model_path)
+@st.cache_resource
+def load_model():
+    model_path = hf_hub_download(
+        repo_id="bhatiashikha24/tourism-package-model",
+        filename="best_tourism_package_model_v1.joblib"
+    )
+    return joblib.load(model_path)
+
+model = load_model()
 
 # Streamlit UI for Machine Failure Prediction
 st.title("Toursim Package Prediction App")
